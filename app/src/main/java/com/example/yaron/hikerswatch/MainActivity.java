@@ -2,6 +2,7 @@ package com.example.yaron.hikerswatch;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -30,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private TextView allInfoTextView;
+    private Button sosButton;
 
 
-    public void updateLocationInfo(Location location) {
+    public void updateLocationInfo(final Location location) {
 
         allInfoTextView = findViewById(R.id.all_info);
-        String address = "Could not find address";
+        sosButton = findViewById(R.id.sosButton);
+         String address = "Could not find address";
 
 
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.ENGLISH);
@@ -74,13 +78,28 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-            //   addressTextView.setText(address);
+            final String addressToSend = address;
 
             allInfoTextView.setText("Latitude: " + location.getLatitude() + "\n"
                     + "Longitude: " + location.getLongitude() + "\n"
                     + "Altitude: " + location.getAltitude() + "\n"
                     + "Address: " + address);
 
+
+            sosButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String shareBody = "I NEED HELP!  My Location is: \n Latitude: " + location.getLatitude()
+                            + "\n Longitude: " + location.getLongitude()
+                            + "\n Address: " + addressToSend;
+                    Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                    sharingIntent.setType("text/plain");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "SOS Location Message");
+                    sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                    startActivity(Intent.createChooser(sharingIntent, null));
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
