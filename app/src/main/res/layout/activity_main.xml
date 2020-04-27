@@ -10,7 +10,7 @@
     android:paddingTop="0dp"
     android:paddingRight="0dp"
     android:paddingBottom="0dp"
-    tools:context="com.example.yaron.hikerswatch.MainActivity">
+    tools:context="com.yaronfuks.hikerswatch.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"

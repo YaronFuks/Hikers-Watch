@@ -1,4 +1,4 @@
-package com.example.yaron.hikerswatch;
+package com.yaronfuks.hikerswatch;
 
 import android.Manifest;
 import android.content.Context;
@@ -13,13 +13,9 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -33,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationListener locationListener;
     private TextView allInfoTextView;
     private Button sosButton;
+    private int altitude;
 
 
     public void updateLocationInfo(final Location location) {
@@ -49,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (addressList != null && addressList.size() > 0) {
 
-                address = "Address: \n";
+                address = "\n";
                 if (addressList.get(0).getSubThoroughfare() != null) {
 
                     address += addressList.get(0).getSubThoroughfare() + " ";
@@ -80,10 +77,14 @@ public class MainActivity extends AppCompatActivity {
 
             final String addressToSend = address;
 
+            altitude = (int) location.getAltitude();
+
             allInfoTextView.setText("Latitude: " + location.getLatitude() + "\n"
                     + "Longitude: " + location.getLongitude() + "\n"
-                    + "Altitude: " + location.getAltitude() + "\n"
+                  //  + "Altitude: " + location.getAltitude() + "\n"
+                    + "Altitude: " + altitude + "\n"
                     + "Address: " + address);
+
 
 
             sosButton.setOnClickListener(new View.OnClickListener() {

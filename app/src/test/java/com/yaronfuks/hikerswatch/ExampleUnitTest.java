@@ -1,4 +1,4 @@
-package com.example.yaron.hikerswatch;
+package com.yaronfuks.hikerswatch;
 
 import org.junit.Test;
 
